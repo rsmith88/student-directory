@@ -10,13 +10,13 @@ def input_students
 		#add the student hash to the array
 		puts "What cohort will #{name} be joining?"
 		cohort = gets.chomp
-		cohort = "November" if cohort == ""
+		cohort = "TBD" if cohort == ""
 		puts "How old is #{name}?"
 		age = gets.chomp
 		age = "TBD" if age == ""
 		puts "What country is #{name} from?"
 		country = gets.chomp
-		country = "Unkown" if country == ""
+		country = "TBD" if country == ""
 		puts "You have entered:   Name: #{name}  Cohort: #{cohort}  Age: #{age}  Country: #{country}"
 		puts "Type 'Yes' to confirm. To start again, type 'No.' To confirm & exit, hit return"
 			confirm = gets.chomp
@@ -49,24 +49,22 @@ end
 
 
 def print_header
-	puts "The students of my cohort at Makers Academy".center(50)
+	puts "The students by cohort at Makers Academy".center(50)
 	puts "-------------".center(50)
 end
 
 def print(students)
-	row = 0
-	while (row < students.length) do
-		if students[row][:name].to_s.split("").first == "T"
-			if students[row][:name].length < 12
-			puts "#{row + 1}. #{students[row][:name]} #{students[row][:age]} #{students[row][:country]} (#{students[row][:cohort]} Cohort)".center(50)
-			end
-		end
-		row += 1
+	cohort = "month"
+	students_by_cohort = students.sort_by { |student| student[:cohort]} 
+	students_by_cohort.each_with_index do |student, index|
+		puts "\n#{student[:cohort]} Cohort" if cohort != "#{student[:cohort]}"
+		puts "#{index + 1}. #{student[:name]} #{student[:age]} #{student[:country]}"
+		cohort = "#{student[:cohort]}"
 	end
 end 
 
 def print_footer(students)
-	puts "Overall, we have #{students.count} great students".center(50)
+	puts "\nOverall, we have #{students.count} great students"
 end
 
 #nothing happens until we call the methods
