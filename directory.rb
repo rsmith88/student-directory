@@ -23,8 +23,8 @@ end
 
 
 def print_header
-	puts "The students of my cohort at Makers Academy"
-	puts "-------------"
+	puts "The students of my cohort at Makers Academy".center(50)
+	puts "-------------".center(50)
 end
 
 def print(students)
@@ -32,7 +32,7 @@ def print(students)
 	while (row < students.length) do
 		if students[row][:name].split("").first == "T"
 			if students[row][:name].length < 12
-			puts "#{row + 1}. #{students[row][:name]} #{students[row][:age]} #{students[row][:country]} (#{students[row][:cohort]} cohort)"
+			puts "#{row + 1}. #{students[row][:name]} #{students[row][:age]} #{students[row][:country]} (#{students[row][:cohort]} cohort)".center(50)
 			end
 		end
 		row += 1
@@ -40,7 +40,7 @@ def print(students)
 end 
 
 def print_footer(students)
-	puts "Overall, we have #{students.count} great students"
+	puts "Overall, we have #{students.count} great students".center(50)
 end
 
 #nothing happens until we call the methods
