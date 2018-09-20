@@ -8,7 +8,11 @@ def input_students
 	#while the name is not empty, repeat the code
 	while !name.empty? do 
 		#add the student hash to the array
-		students << {name: name, cohort: :november}
+		puts "How old is #{name}?"
+		age = gets.chomp
+		puts "What country is #{name} from?"
+		country = gets.chomp
+		students << {name: name, cohort: :November, country: country, age: age}
 		puts "Now we have #{students.count} students"
 		#get another name from the user 
 		name = gets.chomp
@@ -28,7 +32,7 @@ def print(students)
 	while (row < students.length) do
 		if students[row][:name].split("").first == "T"
 			if students[row][:name].length < 12
-			puts "#{row + 1}. #{students[row][:name]} (#{students[row][:cohort]} cohort)"
+			puts "#{row + 1}. #{students[row][:name]} #{students[row][:age]} #{students[row][:country]} (#{students[row][:cohort]} cohort)"
 			end
 		end
 		row += 1
