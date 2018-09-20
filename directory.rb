@@ -23,7 +23,9 @@ def input_students
 		loop do 
 			if (confirm == "yes") or (confirm == "Yes")
 				students << {name: name.to_sym, cohort: cohort.to_sym, country: country.to_sym, age: age.to_sym}
-				puts "Now we have #{students.count} students"
+				puts "Now we have #{students.count} students" if students.count > 1
+				puts "Now we have #{students.count} students" if students.count == 1
+				puts "No students currently enrolled" if students.count == 0 
 				#get another name from the user 
 				puts "Type in the name of the next student, or return to finish."
 				name = gets.chomp
@@ -34,7 +36,6 @@ def input_students
 				break
 			elsif confirm == ""
 				students << {name: name.to_sym, cohort: cohort.to_sym, country: country.to_sym, age: age.to_sym}
-				puts "Now we have #{students.count} students"
 				name = ""
 				break
 			else
@@ -54,17 +55,24 @@ def print_header
 end
 
 def print(students)
-	cohort = "month"
+	cohort = ""
+	counter = 0
 	students_by_cohort = students.sort_by { |student| student[:cohort]} 
 	students_by_cohort.each_with_index do |student, index|
-		puts "\n#{student[:cohort]} Cohort" if cohort != "#{student[:cohort]}"
-		puts "#{index + 1}. #{student[:name]} #{student[:age]} #{student[:country]}"
+		if cohort != "#{student[:cohort]}"
+			puts "\n#{student[:cohort]} Cohort"
+			counter = 1
+		end
+		puts "#{counter}. #{student[:name]} #{student[:age]} #{student[:country]}"
 		cohort = "#{student[:cohort]}"
+		counter += 1
 	end
 end 
 
 def print_footer(students)
-	puts "\nOverall, we have #{students.count} great students"
+	puts "\nCurrently, there are no students enrolled." if students.count == 0
+	puts "\nOverall, we have #{students.count} great student!" if students.count == 1
+	puts "\nOverall, we have #{students.count} great students!" if students.count > 1
 end
 
 #nothing happens until we call the methods
