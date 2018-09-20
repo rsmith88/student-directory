@@ -55,17 +55,19 @@ def print_header
 end
 
 def print(students)
-	cohort = ""
-	counter = 0
-	students_by_cohort = students.sort_by { |student| student[:cohort]} 
-	students_by_cohort.each_with_index do |student, index|
-		if cohort != "#{student[:cohort]}"
-			puts "\n#{student[:cohort]} Cohort"
-			counter = 1
+	if students.empty? != true
+		cohort = ""
+		counter = 0
+		students_by_cohort = students.sort_by { |student| student[:cohort]} 
+		students_by_cohort.each_with_index do |student, index|
+			if cohort != "#{student[:cohort]}"
+				puts "\n#{student[:cohort]} Cohort"
+				counter = 1
+			end
+			puts "#{counter}. #{student[:name]} #{student[:age]} #{student[:country]}"
+			cohort = "#{student[:cohort]}"
+			counter += 1
 		end
-		puts "#{counter}. #{student[:name]} #{student[:age]} #{student[:country]}"
-		cohort = "#{student[:cohort]}"
-		counter += 1
 	end
 end 
 

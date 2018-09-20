@@ -23,8 +23,10 @@ def print_header
 end
 
 def print(names)
-  names.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  if names.empty? != true
+    names.each do |student|
+      puts "#{student[:name]} (#{student[:cohort]} cohort)"
+    end
   end
 end
 
