@@ -24,12 +24,14 @@ def print_header
 end
 
 def print(students)
-	students.each_with_index do |student, index|
-		if student[:name].split("").first == "T"
-			if student[:name].length < 12
-			puts "#{index + 1}. #{student[:name]} (#{student[:cohort]} cohort)"
+	row = 0
+	while (row < students.length) do
+		if students[row][:name].split("").first == "T"
+			if students[row][:name].length < 12
+			puts "#{row + 1}. #{students[row][:name]} (#{students[row][:cohort]} cohort)"
 			end
 		end
+		row += 1
 	end
 end 
 
