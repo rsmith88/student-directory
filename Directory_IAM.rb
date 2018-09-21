@@ -1,3 +1,4 @@
+require 'csv'
 @students = [] # an empty array accessible by all files
 
 def try_load_students
@@ -12,12 +13,14 @@ def try_load_students
 end
 
 def load_students(filename = "students.csv")
-  File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
+    CSV.foreach(filename) do |line|
+      name, cohort = line
       add_students(name, cohort)
+    #Hashes below for reference re: how to use File.open
+    #File.open(filename, "r") do |file|
+      #file.readlines.each do |line|
+      #CSV.open(filename, "r") do |file|
     end
-  end
 end
 
 def interactive_load_students
@@ -33,7 +36,7 @@ def input_students
   name = STDIN.gets.chomp
   while !name.empty? do
     add_students(name)
-    print "Now we have #{@students.count} students"
+    puts "Now we have #{@students.count} students"
     name = STDIN.gets.chomp
   end
 end
@@ -46,11 +49,16 @@ def file_location
 end
 
 def save_students
-  File.open(file_location, "w") do |file|
+  CSV.open(file_location, "w") do |file|
     @students.each do |student|
       student_data = [student[:name], student[:cohort]]
-      csv_line = student_data.join(",")
-      file.puts csv_line
+      file << student_data
+# Hashed entries below for reference re: how to use File.open
+    # File.open(file_location, "w") do |file|
+      # @students.each do |student|
+      # student_data = [student[:name], student[:cohort]]
+      # csv_line = student_data.join(",")
+      # file.puts csv_line
     end
   end
 end
