@@ -1,45 +1,51 @@
 @students = Array.new
+@name = "name"
+
+def introduction
+	puts "Please enter the name of the first student. To finish hit return."
+	@name = gets.delete "\n"
+	return @name
+end
 
 def input_students
-	puts "Please enter the name of the first student. To finish hit return."
-	name = gets.delete "\n"
-	while !name.empty? do 
-		cohort = input_info(name, "cohort")
-		age = input_info(name, "age")
-		country = input_info(name, "country")
-		puts "You have entered:   Name: #{name}  Cohort: #{cohort}  Age: #{age}  Country: #{country}"
-		puts "Type 'Yes' to confirm. To start again, type 'No.' To confirm & exit, hit return"
-			confirm = gets.chomp
-		loop do 
-			if (confirm == "yes") or (confirm == "Yes")
-				@students << {name: name.to_sym, cohort: cohort.to_sym, country: country.to_sym, age: age.to_sym}
-				puts "Now we have #{@students.count} students" if @students.count > 1
-				puts "Now we have #{@students.count} students" if @students.count == 1
-				puts "No students currently enrolled" if @students.count == 0 
-				#get another name from the user 
-				puts "Type in the name of the next student, or return to finish."
-				name = gets.chomp
-				break 
-			elsif (confirm == "no") || (confirm == "No")
-				puts "Please re-enter the student's information. What is his/her name?"
-				name = gets.chomp
-				break
-			elsif confirm == ""
-				@students << {name: name.to_sym, cohort: cohort.to_sym, country: country.to_sym, age: age.to_sym}
-				name = ""
-				break
-			else
-				puts "Type 'Yes' to confirm. To start again, type 'No'. To confirm & exit, hit return"
-				confirm = gets.chomp
-			end
-		end
-	end
-	#return the array of students
+	introduction
+	while !@name.empty? do 
+		cohort, age, country = input_info("cohort"), input_info("age"), input_info("country")
+		puts "You have entered:   Name: #{@name}  Cohort: #{cohort}  Age: #{age}  Country: #{country}"
+		confirm(cohort, age, country)
+		puts "Type in the name of the student, or return to finish."
+		@name = gets.chomp
+	end 
 	@students 
 end 
 
-def input_info(name, fact)
-	puts "Please enter the #{fact.upcase} for #{name}:"
+def print_update
+	puts "Now we have #{@students.count} students" if @students.count > 1
+	puts "Now we have #{@students.count} students" if @students.count == 1
+	puts "No students currently enrolled" if @students.count == 0 
+end
+
+
+def save_students(cohort, age, country)
+	@students << {name: @name.to_sym, age: age.to_sym, cohort: cohort.to_sym, country: country.to_sym,}
+end
+
+def confirm(cohort, age, country)
+	loop do
+		puts "Type 'Yes' to confirm. Type 'No' to start again."
+		confirm = gets.chomp.upcase
+		if confirm == "YES"
+			save_students(cohort, age, country)
+			return print_update
+		elsif confirm == "NO"
+			puts "Try again."
+			return
+		end
+	end
+end
+
+def input_info(fact)
+	puts "Please enter the #{fact.upcase} for #{@name}:"
 		fact = gets.chomp
 		fact = "TBD" if fact == ""
 		return fact 
@@ -73,7 +79,12 @@ def print_footer
 	puts "\nOverall, we have #{@students.count} great students!" if @students.count > 1
 end
 
+def output_students
+	print_header
+	print_students
+	print_footer
+end
+
+
 input_students
-print_header
-print_students
-print_footer
+output_students
